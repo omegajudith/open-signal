@@ -1,0 +1,29 @@
+{
+  "name": "opensignal",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "update-authors": "node scripts/update-authors.js"
+  },
+  "dependencies": {
+    "browser-image-compression": "^2.0.2",
+    "dotenv": "^16.5.0",
+    "firebase": "^11.6.0",
+    "next": "14.2.15",
+    "quill": "^2.0.3",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-image-file-resizer": "^0.4.8",
+    "react-quill": "^2.0.0",
+    "typed.js": "^2.1.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "tailwindcss": "^4"
+  }
+}
