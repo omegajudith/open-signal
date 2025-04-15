@@ -1,24 +1,38 @@
-name: Firebase Backup
+name: Deploy to Vercel
 
 on:
-  schedule:
-    - cron: '0 9 * * *' # every day at 12 noon EAT (which is UTC+3)
+  push:
+    branches:
+      - main
+      - feature/mobile-view
 
 jobs:
-  backup:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-      - name: Set up Google Cloud SDK
-        uses: google-github-actions/setup-gcloud@v1
-        with:
-          project_id: my-love-18013
-          service_account_key: ${{ secrets.GCP_SA_KEY_OPENSIGNAL }}
-          export_default_credentials: true
+      - name: Install Vercel CLI
+        run: npm install -g vercel
 
-      - name: Backup Firestore
+      - name: Pull Vercel environment info
+        run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Build Project
+        run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Deploy to Vercel
         run: |
-          gcloud firestore export gs://my-love-18013.appspot.com/firestore-backups/$(date +%F)
+          if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
+            vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN_OPENSIGNAL }}
+          else
+            vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN_OPENSIGNAL }}
+          fi
+
+      - name: Notify Slack
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_TITLE: "🚀 Deployed to Vercel"
+          SLACK_MESSAGE: "Branch `${{ github.ref_name }}` deployed successfully!"
