@@ -17,10 +17,10 @@ jobs:
         run: npm install -g vercel
 
       - name: Pull Vercel environment info
-        run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
+        run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN_OPENSIGNAL }}
 
       - name: Build Project
-        run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
+        run: vercel build --token=${{ secrets.VERCEL_TOKEN_OPENSIGNAL }}
 
       - name: Deploy to Vercel
         run: |
@@ -30,10 +30,9 @@ jobs:
             vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN_OPENSIGNAL }}
           fi
 
-              - name: Notify Slack
+      - name: Notify Slack
         uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-          SLACK_TITLE: "🚀 Deployed to Vercel"
-          SLACK_MESSAGE: "Branch `${{ github.ref_name }}` deployed successfully!"
-
+          SLACK_TITLE: "🚀 Deploy • ${{ github.ref_name }}"
+          SLACK_MESSAGE: "Branch *${{ github.ref_name }}* deployed successfully!"
