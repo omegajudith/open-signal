@@ -29,10 +29,3 @@ jobs:
           else
             vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN_OPENSIGNAL }}
           fi
-
-      - name: Notify Slack
-        uses: rtCamp/action-slack-notify@v2
-        env:
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-          SLACK_TITLE: "🚀 Deploy • ${{ github.ref_name }}"
-          SLACK_MESSAGE: "Branch *${{ github.ref_name }}* deployed successfully!"
