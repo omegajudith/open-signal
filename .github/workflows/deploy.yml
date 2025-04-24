@@ -29,3 +29,17 @@ jobs:
           else
             vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN_OPENSIGNAL }}
           fi
+          
+
+      - name: Notify Vercel Deployment
+        run: |
+          if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
+            echo "Deployment to production completed successfully."
+          else
+            echo "Preview deployment completed successfully."
+          fi
+      # - name: Notify Slack
+
+
+
+          
