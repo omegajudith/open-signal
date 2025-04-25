@@ -1,0 +1,45 @@
+name: Deploy to Vercel
+
+on:
+  push:
+    branches:
+      - main
+      - feature/mobile-view
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install Vercel CLI
+        run: npm install -g vercel
+
+      - name: Pull Vercel environment info
+        run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN_OPENSIGNAL }}
+
+      - name: Build Project
+        run: vercel build --token=${{ secrets.VERCEL_TOKEN_OPENSIGNAL }}
+
+      - name: Deploy to Vercel
+        run: |
+          if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
+            vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN_OPENSIGNAL }}
+          else
+            vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN_OPENSIGNAL }}
+          fi
+          
+
+      - name: Notify Vercel Deployment
+        run: |
+          if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
+            echo "Deployment to production completed successfully."
+          else
+            echo "Preview deployment completed successfully."
+          fi
+      # - name: Notify Slack
+
+
+
+          
