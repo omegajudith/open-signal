@@ -1,3 +1,4 @@
+
 @import "tailwindcss";
 
 :root {
@@ -25,7 +26,6 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-/* Style for image previews in blog post cards */
 .post-image-preview img {
   width: 100% !important;
   height: 150px !important;
@@ -39,15 +39,12 @@ body {
   }
 }
 
-/* Homepage */
-/* Animation for gradient background */
 @keyframes gradientShift {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
 
-/* 3D pop-in animation for typing effect */
 @keyframes popIn3D {
   0% {
     opacity: 0;
@@ -61,46 +58,49 @@ body {
   }
 }
 
-/* Slide-in menu animation */
-@keyframes slideIn {
-  0% {
+@keyframes slideInMenu {
+  from {
     transform: translateX(100%);
     opacity: 0;
   }
-  100% {
+  to {
     transform: translateX(0);
     opacity: 1;
   }
 }
 
-@keyframes slideOut {
-  0% {
+@keyframes slideOutMenu {
+  from {
     transform: translateX(0);
     opacity: 1;
   }
-  100% {
+  to {
     transform: translateX(100%);
     opacity: 0;
   }
 }
 
-/* Smooth scrolling */
+.slide-in {
+  animation: slideInMenu 0.4s ease-out forwards;
+}
+
+.slide-out {
+  animation: slideOutMenu 0.3s ease-in forwards;
+}
+
 html {
   scroll-behavior: smooth;
 }
 
-/* Gradient animation */
 .animate-gradient {
   animation: gradientShift 15s ease infinite;
 }
 
-/* 3D pop-in effect for individual words */
 .pop-3d {
   display: inline-block;
   animation: popIn3D 0.5s ease forwards;
 }
 
-/* Color and shadow styles for 3D text */
 .text-white-3d {
   color: white;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5), 4px 4px 8px rgba(0, 0, 0, 0.3);
@@ -116,22 +116,10 @@ html {
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5), 4px 4px 8px rgba(0, 0, 0, 0.3);
 }
 
-/* Responsive adjustments */
 @media (max-width: 640px) {
-  .text-5xl {
-    font-size: 2.5rem;
-  }
-  .text-3xl {
-    font-size: 1.875rem;
-  }
-  .text-xl {
-    font-size: 1.125rem;
-  }
-  .text-lg {
-    font-size: 1rem;
-  }
-  .container {
-    padding-left: 1rem;
-    padding-right: 1rem;
-  }
+  .text-5xl { font-size: 2.5rem; }
+  .text-3xl { font-size: 1.875rem; }
+  .text-xl { font-size: 1.125rem; }
+  .text-lg { font-size: 1rem; }
+  .container { padding-left: 1rem; padding-right: 1rem; }
 }
